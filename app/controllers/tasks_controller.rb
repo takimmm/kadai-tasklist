@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   end
 
   def new
-      @atsk = Task.new
+      @task = Task.new
   end
 
   def create
@@ -28,8 +28,8 @@ class TasksController < ApplicationController
   end
 
   def update
-      @task = Task.update(task_params)
-      if @task.update(message_params)
+      @task = Task.find(params[:id])
+      if @task.update(task_params)
           flash[:success] = 'タスクが正常に更新されました。'
           redirect_to @task
       else 
@@ -47,8 +47,8 @@ class TasksController < ApplicationController
   end
   
   private
-  def message_params
-      params.require(:message).permit(:content)
+  def task_params
+      params.require(:task).permit(:content)
   end
 
 end
