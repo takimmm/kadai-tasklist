@@ -29,7 +29,8 @@ class TasksController < ApplicationController
   end
 
   def edit
-      unless @tasks
+      @task = current_user.tasks.find_by(id: params[:id])
+      unless @task
         redirect_to root_url
       end
   end
@@ -45,6 +46,10 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    @task = current_user.tasks.find_by(id: params[:id])
+      unless @task
+        redirect_to root_url
+      end
       @task.destroy
       
       flash[:success] = 'タスクは正常に削除されました。'
