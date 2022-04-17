@@ -3,10 +3,13 @@ class TasksController < ApplicationController
   before_action :require_user_logged_in
   def index
       @tasks = current_user.tasks
-      
   end
 
   def show
+      @task = current_user.tasks.find_by(id: params[:id])
+      unless @task
+        redirect_to root_url
+      end
   end
 
   def new
@@ -26,6 +29,9 @@ class TasksController < ApplicationController
   end
 
   def edit
+      unless @tasks
+        redirect_to root_url
+      end
   end
 
   def update
